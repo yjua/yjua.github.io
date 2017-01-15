@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="null">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="author" content="YJua">
+	
+        <link rel="icon" href="/static/images/favicon.png">
+    
+    
+    
+    	<meta name="keyword" content="JavaScript">
+    
+    
+    	<meta name="description" content="JavaScript中this是个很重要，但是又很容易混乱的一个东西，尤其是在各种异步操作的时候，一不小心就很容易出错。">
+    
+	<title>JavaScript中this常见的一些用法 - 消失de季节</title>
+	<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+
+
+<nav  id="sidebar" class=" behavior_1">
+    <div class="wrap">
+    	
+    		<div class="profile">
+    			<a href="/"><img src="/static/images/gravatar.jpg" alt="消失de季节"></a>
+    			<span>消失de季节</span>
+    		</div>
+    	
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  class="" href="/">
+                            
+                                <i class="iconfont icon-home" title="首页"></i>
+                            
+                            <span>首页</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/archive/">
+                            
+                                <i class="iconfont icon-archive" title="归档"></i>
+                            
+                            <span>归档</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/tags/">
+                            
+                                <i class="iconfont icon-tags" title="标签"></i>
+                            
+                            <span>标签</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/about/">
+                            
+                                <i class="iconfont icon-user" title="关于"></i>
+                            
+                            <span>关于</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/links/">
+                            
+                                <i class="iconfont icon-link" title="友链"></i>
+                            
+                            <span>友链</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  target="_blank"  class="" href="https://github.com/yjua">
+                            
+                                <i class="iconfont icon-github" title="GitHub"></i>
+                            
+                            <span>GitHub</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  target="_blank"  class="" href="http://weibo.com/1887197942/">
+                            
+                                <i class="iconfont icon-weibo" title="微博"></i>
+                            
+                            <span>微博</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  class="" href="/atom.xml">
+                            
+                                <i class="iconfont icon-rss" title="RSS"></i>
+                            
+                            <span>RSS</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    </div>
+</nav>
+
+
+
+<div id="header">
+	<div class="btn-bar"><i></i></div>
+	<h1><a href="/">消失de季节</a></h1>
+	<a class="me" href="/about/">
+        <img src="/static/images/gravatar.jpg" alt="消失de季节" alt="消失de季节">
+    </a>
+</div>
+<div id="sidebar-mask"></div>
+
+
+
+<div id="main">
+    <div class="wrap">
+        <div id="page-post">
+        	<article class="markdown">
+				<h1>
+					
+                        JavaScript中this常见的一些用法
+                    
+				</h1>
+				<p class="note-tags">
+					
+                        <a  href="/tags/JavaScript" data-tag="javascript">
+                            <code class="notebook">JavaScript</code>
+                        </a>
+                    
+				</p>
+				<div class="content">
+					<p>JavaScript中this是个很重要，但是又很容易混乱的一个东西，尤其是在各种异步操作的时候，一不小心就很容易出错。</p>
+<a id="more"></a>
+<p>this是JavaScript中一个关键字。它指的是在<code>运行时</code>状态下所指的一个对象。</p>
+<p>下面是一些常见的情况。</p>
+<h3 id="全局上下文"><a href="#全局上下文" class="headerlink" title="全局上下文"></a>全局上下文</h3><p>在全局上下文中，<code>this</code>代指的是全局对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 浏览器环境下，全局对象就是指的window对象。</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span> === <span class="built_in">window</span>)    <span class="comment">//true</span></div><div class="line"></div><div class="line"><span class="keyword">this</span>.a = <span class="number">10</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.a);    <span class="comment">//10</span></div></pre></td></tr></table></figure>
+<h3 id="函数上下文"><a href="#函数上下文" class="headerlink" title="函数上下文"></a>函数上下文</h3><p>在函数内部调用，<code>this</code>主要取决于当时的环境</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);    </div><div class="line">&#125;</div><div class="line"></div><div class="line">fn1()   <span class="comment">//3</span></div><div class="line"><span class="built_in">window</span>.fn1()    <span class="comment">//3</span></div></pre></td></tr></table></figure>
+<p>这是最常用的一种调用方法，因为<code>fn1</code>函数实在全局对象下直接调用，所以<code>fn1()</code>和<code>window.fn1()</code>是等价的。这个时候<code>this</code>其实上是指向调用当前方法的对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    a: <span class="number">20</span>,</div><div class="line">&#125;</div><div class="line">obj.fn2 = fn2;</div><div class="line"></div><div class="line">fn2()       <span class="comment">//10</span></div><div class="line">obj.fn2()   <span class="comment">//20</span></div></pre></td></tr></table></figure>
+<p>我们直接调用<code>fn2</code> 相当于<code>window</code>对象调用，则<code>this</code>指向了全局对象，所以结果为<code>10</code>。当执行<code>obj.fn2()</code>的时候，<code>this</code>指向了当前调用对象<code>obj</code>,则结果为<code>20</code>；</p>
+<h3 id="构造函数中的this"><a href="#构造函数中的this" class="headerlink" title="构造函数中的this"></a>构造函数中的this</h3><p>在构造函数中的<code>this</code>一般指向通过该构造函数实例化后的对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var a = 10;</div><div class="line">function fn3()&#123;</div><div class="line">    this.a =30;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var obj = new fn3();</div><div class="line">console.log(obj.a)      //30</div></pre></td></tr></table></figure></p>
+<h3 id="apply-和-call"><a href="#apply-和-call" class="headerlink" title="apply 和 call"></a>apply 和 call</h3><p>这两个方法可以让函数在调用的时候指向一个指定的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function add()&#123;</div><div class="line">    reutrn this.a + this.b;</div><div class="line">&#125;</div><div class="line">var a = 10;</div><div class="line">var b = 20;</div><div class="line"></div><div class="line">var obj = &#123;</div><div class="line">    a: 3,</div><div class="line">    b: 5</div><div class="line">&#125;</div><div class="line"></div><div class="line">add();  //30</div><div class="line">add.call(obj)   //8</div></pre></td></tr></table></figure>
+<h3 id="bind函数"><a href="#bind函数" class="headerlink" title="bind函数"></a>bind函数</h3><p>当一个函数<code>fn</code>调用<code>bind</code>函数的时候，如<code>fn.bind(obj)</code>会创建一个跟<code>fn</code>一样的函数体。但是创建的这个新的函数体的<code>this</code>会指向调用<code>bind</code>时候的第一个参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">var a = 10;</div><div class="line">function fn()&#123;</div><div class="line">    return this.a;</div><div class="line">&#125;</div><div class="line">var obj = &#123;</div><div class="line">    a : 6</div><div class="line">&#125;</div><div class="line">var g = fn.bind(obj);</div><div class="line">console.log(g());   //6</div><div class="line">fn();   //10</div></pre></td></tr></table></figure>
+
+				</div>
+                <p> -- <acronym title="End of File">EOF</acronym> -- </p>
+                <div class="post-info">
+                    <p>本文链接：<a href="http://yjua.github.io/2017/01/15/this/">http://yjua.github.io/2017/01/15/this/</a></p>
+                    <p>发表于<i>2017-01-15 17:36:15</i>，并被添加「
+                            
+                            <a  href="/tags/JavaScript" data-tag="javascript">JavaScript</a>
+                        」标签，最后修改于<i>2017-01-15 17:46:05</i></p>
+                </div>
+			</article>
+            
+                <div id="comments">
+	<h2>Comments</h2>
+	<div id="disqus_thread">
+	    评论加载中...<br><br>注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。
+	</div>
+</div>
+            
+        </div>
+    </div>
+</div>
+
+    <script>
+         var disqus_config = function () {
+             this.page.url = 'http://yjua.github.io/2017/01/15/this/';
+             this.page.identifier = '2017/01/15/this/';
+         };
+        (function() {
+
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'YJua';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+
+            setTimeout(function(){
+                (d.head || d.body).appendChild(s);
+            },100);
+        })();
+    </script>
+
+
+<script src="/static/js/meizi.js"></script>
+<!-- tongji -->
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="busuanzi_tongji">
+	<div class="wrap">
+	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	本站访客数<span id="busuanzi_value_site_uv"></span>次
+	</div>
+</div>
+
+</body>
+</html>
+<div class="busuanzi_tongji">
+	<div class="wrap">
+	本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</div>
+</div>
