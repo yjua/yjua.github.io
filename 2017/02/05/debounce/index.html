@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="null">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="author" content="YJua">
+	
+        <link rel="icon" href="/static/images/favicon.png">
+    
+    
+    
+    	<meta name="keyword" content="JavaScript">
+    
+    
+    	<meta name="description" content="在JavaScript中，我们有时候会遇到高频率的去触发一个事件，比如：相应鼠标移动、窗口大小调整、页面滚动的事件等。如果这些事件绑定的处理函数稍微复杂些，需要很大的运算，如果响应速度跟不上触发的频率，就可能出现页面卡顿、崩溃等现象。">
+    
+	<title>函数防抖和函数节流 - 消失de季节</title>
+	<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+
+
+<nav  id="sidebar" class=" behavior_1">
+    <div class="wrap">
+    	
+    		<div class="profile">
+    			<a href="/"><img src="/static/images/gravatar.jpg" alt="消失de季节"></a>
+    			<span>消失de季节</span>
+    		</div>
+    	
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  class="" href="/">
+                            
+                                <i class="iconfont icon-home" title="首页"></i>
+                            
+                            <span>首页</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/archive/">
+                            
+                                <i class="iconfont icon-archive" title="归档"></i>
+                            
+                            <span>归档</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/tags/">
+                            
+                                <i class="iconfont icon-tags" title="标签"></i>
+                            
+                            <span>标签</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/about/">
+                            
+                                <i class="iconfont icon-user" title="关于"></i>
+                            
+                            <span>关于</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/links/">
+                            
+                                <i class="iconfont icon-link" title="友链"></i>
+                            
+                            <span>友链</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  target="_blank"  class="" href="https://github.com/yjua">
+                            
+                                <i class="iconfont icon-github" title="GitHub"></i>
+                            
+                            <span>GitHub</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  target="_blank"  class="" href="http://weibo.com/1887197942/">
+                            
+                                <i class="iconfont icon-weibo" title="微博"></i>
+                            
+                            <span>微博</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  class="" href="/atom.xml">
+                            
+                                <i class="iconfont icon-rss" title="RSS"></i>
+                            
+                            <span>RSS</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    </div>
+</nav>
+
+
+
+<div id="header">
+	<div class="btn-bar"><i></i></div>
+	<h1><a href="/">消失de季节</a></h1>
+	<a class="me" href="/about/">
+        <img src="/static/images/gravatar.jpg" alt="消失de季节" alt="消失de季节">
+    </a>
+</div>
+<div id="sidebar-mask"></div>
+
+
+
+<div id="main">
+    <div class="wrap">
+        <div id="page-post">
+        	<article class="markdown">
+				<h1>
+					
+                        函数防抖和函数节流
+                    
+				</h1>
+				<p class="note-tags">
+					
+                        <a  href="/tags/JavaScript" data-tag="javascript">
+                            <code class="notebook">JavaScript</code>
+                        </a>
+                    
+				</p>
+				<div class="content">
+					<p>在JavaScript中，我们有时候会遇到高频率的去触发一个事件，比如：相应鼠标移动、窗口大小调整、页面滚动的事件等。<br>如果这些事件绑定的处理函数稍微复杂些，需要很大的运算，如果响应速度跟不上触发的频率，就可能出现页面卡顿、崩溃等现象。</p>
+<a id="more"></a>
+<p>怎么解决这个问题呢？其实大多数情况下，我们可能不需要那么高的频率去响应触发，所以我们可以通过限制触发事件的频率来解决问题。常见的两个方法是：函数防抖和函数节流。</p>
+<ul>
+<li><p>函数防抖：就是让一个函数在上次执行完后，满足一个等待时间后再次执行，如果在等待时间内，再次被触发，等待时间会重新计时。</p>
+</li>
+<li><p>函数节流：设置一个间隔时间，只要间隔时间内函数被触发，则不管触发是否多次，函数会在间隔时间到达的时候执行一次。</p>
+</li>
+</ul>
+<p><code>underscore.js</code>中给我们提供了这两个相关的函数实现，我们可以查看源码拿来学习使用。</p>
+<p>函数防抖<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// Returns a function, that, as long as it continues to be invoked, will not</span></div><div class="line"><span class="comment">// be triggered. The function will be called after it stops being called for</span></div><div class="line"><span class="comment">// N milliseconds. If `immediate` is passed, trigger the function on the</span></div><div class="line"><span class="comment">// leading edge, instead of the trailing.</span></div><div class="line">_.debounce = <span class="function"><span class="keyword">function</span>(<span class="params">func, wait, immediate</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> timeout, result;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> later = <span class="function"><span class="keyword">function</span>(<span class="params">context, args</span>) </span>&#123;</div><div class="line">    timeout = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">if</span> (args) result = func.apply(context, args);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> debounced = restArgs(<span class="function"><span class="keyword">function</span>(<span class="params">args</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (timeout) clearTimeout(timeout);</div><div class="line">    <span class="keyword">if</span> (immediate) &#123;</div><div class="line">      <span class="keyword">var</span> callNow = !timeout;</div><div class="line">      timeout = setTimeout(later, wait);</div><div class="line">      <span class="keyword">if</span> (callNow) result = func.apply(<span class="keyword">this</span>, args);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      timeout = _.delay(later, wait, <span class="keyword">this</span>, args);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  debounced.cancel = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    clearTimeout(timeout);</div><div class="line">    timeout = <span class="literal">null</span>;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> debounced;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>参数func是需要进行函数防抖的函数；参数wait则是需要等待的时间，单位为毫秒；immediate参数如果为true，则debounce函数会在调用时立刻执行一次function，而不需要等到wait这个时间后，例如防止点击提交按钮时的多次点击就可以使用这个参数。</p>
+<blockquote>
+<p>我们可以这样使用<br> var lazyLayout = _.debounce(calculateLayout, 300);<br> $(window).resize(lazyLayout);</p>
+</blockquote>
+<p>函数节流<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Returns a function, that, when invoked, will only be triggered at most once</span></div><div class="line"><span class="comment">// during a given window of time. Normally, the throttled function will run</span></div><div class="line"><span class="comment">// as much as it can, without ever going more than once per `wait` duration;</span></div><div class="line"><span class="comment">// but if you'd like to disable the execution on the leading edge, pass</span></div><div class="line"><span class="comment">// `&#123;leading: false&#125;`. To disable execution on the trailing edge, ditto.</span></div><div class="line">_.throttle = <span class="function"><span class="keyword">function</span>(<span class="params">func, wait, options</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> timeout, context, args, result;</div><div class="line">  <span class="keyword">var</span> previous = <span class="number">0</span>;</div><div class="line">  <span class="keyword">if</span> (!options) options = &#123;&#125;;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> later = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    previous = options.leading === <span class="literal">false</span> ? <span class="number">0</span> : _.now();</div><div class="line">    timeout = <span class="literal">null</span>;</div><div class="line">    result = func.apply(context, args);</div><div class="line">    <span class="keyword">if</span> (!timeout) context = args = <span class="literal">null</span>;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  <span class="keyword">var</span> throttled = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> now = _.now();</div><div class="line">    <span class="keyword">if</span> (!previous &amp;&amp; options.leading === <span class="literal">false</span>) previous = now;</div><div class="line">    <span class="keyword">var</span> remaining = wait - (now - previous);</div><div class="line">    context = <span class="keyword">this</span>;</div><div class="line">    args = <span class="built_in">arguments</span>;</div><div class="line">    <span class="keyword">if</span> (remaining &lt;= <span class="number">0</span> || remaining &gt; wait) &#123;</div><div class="line">      <span class="keyword">if</span> (timeout) &#123;</div><div class="line">        clearTimeout(timeout);</div><div class="line">        timeout = <span class="literal">null</span>;</div><div class="line">      &#125;</div><div class="line">      previous = now;</div><div class="line">      result = func.apply(context, args);</div><div class="line">      <span class="keyword">if</span> (!timeout) context = args = <span class="literal">null</span>;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!timeout &amp;&amp; options.trailing !== <span class="literal">false</span>) &#123;</div><div class="line">      timeout = setTimeout(later, remaining);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  throttled.cancel = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    clearTimeout(timeout);</div><div class="line">    previous = <span class="number">0</span>;</div><div class="line">    timeout = context = args = <span class="literal">null</span>;</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> throttled;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>参数func是需要进行函数节流的函数；参数wait则是函数执行的时间间隔，单位是毫秒。option有两个选项，throttle第一次调用时默认会立刻执行一次function，如果传入{leading: false}，则第一次调用时不执行function。{trailing: false}参数则表示禁止最后那一次延迟的调用。</p>
+<blockquote>
+<p>我们可以这样使用<br>var throttled = _.throttle(updatePosition, 100);<br>$(window).scroll(throttled);</p>
+</blockquote>
+
+				</div>
+                <p> -- <acronym title="End of File">EOF</acronym> -- </p>
+                <div class="post-info">
+                    <p>本文链接：<a href="http://yjua.github.io/2017/02/05/debounce/">http://yjua.github.io/2017/02/05/debounce/</a></p>
+                    <p>发表于<i>2017-02-05 18:01:02</i>，并被添加「
+                            
+                            <a  href="/tags/JavaScript" data-tag="javascript">JavaScript</a>
+                        」标签，最后修改于<i>2017-02-12 09:36:41</i></p>
+                </div>
+			</article>
+            
+                <div id="comments">
+	<h2>Comments</h2>
+	<div id="disqus_thread">
+	    评论加载中...<br><br>注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。
+	</div>
+</div>
+            
+        </div>
+    </div>
+</div>
+
+    <script>
+         var disqus_config = function () {
+             this.page.url = 'http://yjua.github.io/2017/02/05/debounce/';
+             this.page.identifier = '2017/02/05/debounce/';
+         };
+        (function() {
+
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'YJua';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+
+            setTimeout(function(){
+                (d.head || d.body).appendChild(s);
+            },100);
+        })();
+    </script>
+
+
+<script src="/static/js/meizi.js"></script>
+<!-- tongji -->
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="busuanzi_tongji">
+	<div class="wrap">
+	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	本站访客数<span id="busuanzi_value_site_uv"></span>次
+	</div>
+</div>
+
+</body>
+</html>
+<div class="busuanzi_tongji">
+	<div class="wrap">
+	本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</div>
+</div>
