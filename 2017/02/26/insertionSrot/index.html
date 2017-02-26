@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="null">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="author" content="YJua">
+	
+        <link rel="icon" href="/static/images/favicon.png">
+    
+    
+    
+    	<meta name="keyword" content="JavaScript,算法">
+    
+    
+    	<meta name="description" content="插入排序是一种直观简单的排序算法。简单来讲，就是把未排序的数据，跟已排序的数据进行比较,然后插入合适的位置。">
+    
+	<title>JavaScript常用算法-插入排序 - 消失de季节</title>
+	<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+
+
+<nav  id="sidebar" class=" behavior_1">
+    <div class="wrap">
+    	
+    		<div class="profile">
+    			<a href="/"><img src="/static/images/gravatar.jpg" alt="消失de季节"></a>
+    			<span>消失de季节</span>
+    		</div>
+    	
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  class="" href="/">
+                            
+                                <i class="iconfont icon-home" title="首页"></i>
+                            
+                            <span>首页</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/archive/">
+                            
+                                <i class="iconfont icon-archive" title="归档"></i>
+                            
+                            <span>归档</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/tags/">
+                            
+                                <i class="iconfont icon-tags" title="标签"></i>
+                            
+                            <span>标签</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/about/">
+                            
+                                <i class="iconfont icon-user" title="关于"></i>
+                            
+                            <span>关于</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  class="" href="/links/">
+                            
+                                <i class="iconfont icon-link" title="友链"></i>
+                            
+                            <span>友链</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  target="_blank"  class="" href="https://github.com/yjua">
+                            
+                                <i class="iconfont icon-github" title="GitHub"></i>
+                            
+                            <span>GitHub</span>
+                        </a>
+                    </li>
+    			
+    				<li>
+                        <a  target="_blank"  class="" href="http://weibo.com/1887197942/">
+                            
+                                <i class="iconfont icon-weibo" title="微博"></i>
+                            
+                            <span>微博</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    		<ul class="buttons">
+    			
+    				<li>
+                        <a  class="" href="/atom.xml">
+                            
+                                <i class="iconfont icon-rss" title="RSS"></i>
+                            
+                            <span>RSS</span>
+                        </a>
+                    </li>
+    			
+    		</ul>
+    	
+    </div>
+</nav>
+
+
+
+<div id="header">
+	<div class="btn-bar"><i></i></div>
+	<h1><a href="/">消失de季节</a></h1>
+	<a class="me" href="/about/">
+        <img src="/static/images/gravatar.jpg" alt="消失de季节" alt="消失de季节">
+    </a>
+</div>
+<div id="sidebar-mask"></div>
+
+
+
+<div id="main">
+    <div class="wrap">
+        <div id="page-post">
+        	<article class="markdown">
+				<h1>
+					
+                        JavaScript常用算法-插入排序
+                    
+				</h1>
+				<p class="note-tags">
+					
+                        <a  href="/tags/JavaScript" data-tag="javascript">
+                            <code class="notebook">JavaScript</code>
+                        </a>
+                    
+                        <a  href="/tags/算法" data-tag="算法">
+                            <code class="notebook">算法</code>
+                        </a>
+                    
+				</p>
+				<div class="content">
+					<p>插入排序是一种直观简单的排序算法。简单来讲，就是把未排序的数据，跟已排序的数据进行比较,然后插入合适的位置。</p>
+<a id="more"></a>
+<p>算法实现步骤（从小到大排序）：</p>
+<ul>
+<li>从第一个元素开始，一般认为第一个元素已经排序。</li>
+<li>取出下一个要排序的新元素，从已经排序的最后一个数据向前进行比较。</li>
+<li>如果该元素（已排序）大于新元素，则将该元素向后移动一个位置。</li>
+<li>重复第三步，直到找到已排序的元素小于或等于新元素的位置</li>
+<li>插入该新元素</li>
+<li>重复2-6步骤</li>
+</ul>
+<p>javascript实现代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertionSort</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> len,</div><div class="line">        i,j,temp;</div><div class="line">    len = arr.length;</div><div class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;len;i++)&#123;</div><div class="line">        temp = arr[i];</div><div class="line">        j = i<span class="number">-1</span>;</div><div class="line">        <span class="keyword">for</span>(;j &gt;= <span class="number">0</span> &amp;&amp; arr[j] &gt; temp; j--)&#123;</div><div class="line">            arr[j+<span class="number">1</span>] = arr[j];</div><div class="line">        &#125;</div><div class="line">        arr[j+<span class="number">1</span>] = temp;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//使用方法</span></div><div class="line"><span class="keyword">var</span> arr = [<span class="number">3</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">10</span>];</div><div class="line">insertionSort(arr);     <span class="comment">//[1, 2, 3, 5, 6, 9, 10]</span></div></pre></td></tr></table></figure></p>
+<p>算法复杂度:<br>最好的情况是：o(n)<br>最坏的情况是：o(n^2)<br>平均复杂度是：o(n^2)</p>
+<p>插入排序适合数量比较少的数组排序，(比如数量不过千)。</p>
+
+				</div>
+                <p> -- <acronym title="End of File">EOF</acronym> -- </p>
+                <div class="post-info">
+                    <p>本文链接：<a href="http://yjua.github.io/2017/02/26/insertionSrot/">http://yjua.github.io/2017/02/26/insertionSrot/</a></p>
+                    <p>发表于<i>2017-02-26 20:42:22</i>，并被添加「
+                            
+                            <a  href="/tags/JavaScript" data-tag="javascript">JavaScript</a>
+                        
+                            ，
+                            <a  href="/tags/算法" data-tag="算法">算法</a>
+                        」标签，最后修改于<i>2017-02-26 21:20:32</i></p>
+                </div>
+			</article>
+            
+                <div id="comments">
+	<h2>Comments</h2>
+	<div id="disqus_thread">
+	    评论加载中...<br><br>注：如果长时间无法加载，请针对 disq.us | disquscdn.com | disqus.com 启用代理。
+	</div>
+</div>
+            
+        </div>
+    </div>
+</div>
+
+    <script>
+         var disqus_config = function () {
+             this.page.url = 'http://yjua.github.io/2017/02/26/insertionSrot/';
+             this.page.identifier = '2017/02/26/insertionSrot/';
+         };
+        (function() {
+
+            var d = document, s = d.createElement('script');
+            var disqus_shortname = 'YJua';
+            s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+
+            setTimeout(function(){
+                (d.head || d.body).appendChild(s);
+            },100);
+        })();
+    </script>
+
+
+<script src="/static/js/meizi.js"></script>
+<!-- tongji -->
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="busuanzi_tongji">
+	<div class="wrap">
+	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	本站访客数<span id="busuanzi_value_site_uv"></span>次
+	</div>
+</div>
+
+</body>
+</html>
+<div class="busuanzi_tongji">
+	<div class="wrap">
+	本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</div>
+</div>
